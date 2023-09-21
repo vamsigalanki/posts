@@ -1,18 +1,121 @@
-<!DOCTYPE html>
-<head></head>
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    </head>
     <body>
+        <button onclick="order()">ace</button>
+        <button onclick="dec()">dec</button>
+        <button onclick="getvalue()">click</button>
+        <input type="text" onKeyup="abc()" id="f">
+        <table border="2px",padding="20px">
+            <tr>
+                <th>country</th>
+                <th>captial</th>
+                <th>population</th>
+                <th>borders</th>
+                <th>area</th>
+                <th>continents</th>
+                <th>flags</th>
+            </tr>
+            <tbody id="d1"></tbody>
+        </table>
+        
+        
         <script>
-//4.Write a program to check if a number is multiple of 3 or not.
+            var z=[]
+            function getvalue(){
+              $.get("https://restcountries.com/v3/all",function(countries,statues){
+                console.log(countries)
+                z=countries
+                gentable(z)
+              })
+            }
+              function gentable(arr)
+              {
 
-            var n=+prompt();
-                   if(n%3==0){
-                    console.log("yes it is multiple of3")
-                   }
-                   else{
-                    console.log("not a multiple of 3");
-                   }
+              document.getElementById("d1").innerHTML=""
+                arr.forEach(function(country)
+                {
+                    var tr1=document.createElement("tr");
+                    var td1=document.createElement("td")
+                    td1.innerHTML=country.name.common
+                    tr1.appendChild(td1);
+
+                    var td2=document.createElement("td")
+                    td2.innerHTML=country.capital
+                    tr1.appendChild(td2);
+
+                    var td3=document.createElement("td")
+                    td3.innerHTML=country.population
+                    tr1.appendChild(td3);
+
+                    var td4=document.createElement("td")
+                    td4.innerHTML=country.borders
+                    tr1.appendChild(td4);
+
+                    var td5=document.createElement("td")
+                    td5.innerHTML=country.area
+                    tr1.appendChild(td5);
+
+                    var td6=document.createElement("td")
+                    td6.innerHTML=country.continents
+                    tr1.appendChild(td6);
+
+                    var td7=document.createElement("td")
+                    var im=document.createElement("img")
+                    im.src=country.flags[0];
+                    im.style.width="50px"
+                    im.style.height="50px"
+                    im.style.bordeRadius="50%"
+
+                    td7.appendChild(im);     
+                    tr1.appendChild(td7);
+
+                    document.getElementById("d1").appendChild(tr1)
+                    
+
+                })
+                
+              
+              }
+            
+            function abc()
+            {
+            var s=document.getElementById("f").value
+              var res=z.filter(function(a,b){
+                  return(a.name.common.startsWith(s))
+                })
+                gentable(res)
+            }
+            function order(){
+             var n=z.sort(function(a,b){
+                if(a.name.common>b.name.common){
+                    return 1;
+                }
+                if(a.name.common<b.name.common)
+                {
+                    return -1;
+                }
+                return 0;
+                })
+                gentable(n)
+            }
+            function dec(){
+             var n=z.sort(function(a,b){
+                if(a.name.common>b.name.common){
+                    return -1;
+                }
+                if(a.name.common<b.name.common)
+                {
+                    return 1;
+                }
+                return 0;
+                })
+                gentable(n)
+            }
         </script>
+
+      
     </body>
 </html>
-
 
